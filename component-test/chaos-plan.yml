@@ -1,0 +1,19 @@
+name: "filesCdnServer chaos plan"
+scenarios:
+ - simpleFuck:
+    containers:
+        - filesCdnServer: 0
+ - scaleFuck:
+    containers:
+        - filesCdnServer: 5
+ - noMongo:
+    containers:
+        - mongodb: 0
+ - noRedis:
+    containers:
+        - redis: 0
+ - alloff:
+    containers:
+        - filesCdnServer: 0
+        - mongodb: 0
+        - redis: 0
