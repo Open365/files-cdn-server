@@ -1,4 +1,4 @@
-FROM docker-registry.eyeosbcn.com/eyeos-notifyfs
+FROM docker-registry.eyeosbcn.com/eyeos-fedora21-node-base
 
 ENV InstallationDir /var/service/
 ENV WHATAMI cdn
