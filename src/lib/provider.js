@@ -116,20 +116,4 @@ function _getById(client, id, res, cb) {
 	});
 }
 
-function __urlParser(card, path, type, cb) {
-	//the path may be dangerous here, sanitize!
-	var user = card.username;
-	path = '/'+user+'/'+type+'/'+path;
-
-	var pathComponents = path.split('/');
-	for (var i = 0; i < pathComponents.length; i++) {
-		if (pathComponents[i] === '..') {
-			logger.error('Invalid characters in path: '+path);
-			cb('KO');
-			return;
-		}
-	}
-	return path;
-}
-
 module.exports = Provider;
