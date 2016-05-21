@@ -61,7 +61,8 @@ suite('Provider', function () {
 		};
 
 		fakeCard = {
-			username: 'anonymous'
+			username: 'anonymous',
+			domain: 'some_domain'
 		};
 
 		clientMock = sinon.mock(client);
@@ -73,7 +74,7 @@ suite('Provider', function () {
 	suite('#save', function () {
 		var expSetEx, expEnd, expFail, expSet;
 		setup(function() {
-			expSetEx = clientMock.expects('setex').once().withArgs('getFile.'+'id', 3600*4, '/getFile/anonymous/files/path');
+			expSetEx = clientMock.expects('setex').once().withArgs('getFile.'+'id', 3600*4, '/getFile/some_domain/anonymous/files/path');
 
 			expEnd = resMock.expects('end').once().withExactArgs(result);
 			expFail = resMock.expects('end').once().withExactArgs('KO');
@@ -169,7 +170,7 @@ suite('Provider', function () {
 		});
 
 		test('should call res.writeHead with correct params for not printed file (user or workgroup file)', function () {
-			var commonPath = '/some.user/files/some Doc.pdf';
+			var commonPath = '/some.domain/some.user/files/some Doc.pdf';
 			var getFilePath = '/getFile' + commonPath;
 			client = {
 				get: function (id, fn) {
@@ -189,7 +190,7 @@ suite('Provider', function () {
 		});
 
 		test('should call res.writeHead with correct params for printed file', function () {
-			var commonPath = '/some.user/print/some Doc.pdf';
+			var commonPath = '/some.domain/some.user/print/some Doc.pdf';
 			var getFilePath = '/getFile' + commonPath;
 			var getPrintFilePath = '/getPrintFile' + commonPath;
 			client = {
@@ -212,7 +213,7 @@ suite('Provider', function () {
 
 	suite('#getView', function () {
 		test("calls the response with the instance path", function () {
-			var commonPath = '/some.user/print/some Doc.pdf';
+			var commonPath = '/some.domain/some.user/print/some Doc.pdf';
 			var getFilePath = '/getFile' + commonPath;
 			var expectedPath = '/getViewFile' + commonPath;
 			client = {

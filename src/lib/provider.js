@@ -38,7 +38,7 @@ Provider.prototype.get = function(id, res) {
 			logger.error('Error getting file with id ' + id);
 		}
 		var contentType = 'text/plain';
-		if (/^\/getFile\/([^\/]+\/print\/)/.test(instance)) {
+		if (/^\/getFile\/(([^\/]+\/){2}print\/)/.test(instance)) {
 			instance = instance.replace(/^\/getFile\//, '/getPrintFile/');
 			contentType = 'application/pdf';
 		}
@@ -80,7 +80,8 @@ Provider.prototype.upload = function(req, res) {
 Provider.prototype.save = function(id, path, card, type, cb) {
 	//the path may be dangerous here, sanitize!
 	var user = card.username;
-	path = '/'+user+'/'+type+'/'+path;
+	var domain = card.domain;
+	path = '/'+domain+'/'+user+'/'+type+'/'+path;
 
 	var pathComponents = path.split('/');
 	for (var i = 0; i < pathComponents.length; i++) {
@@ -113,22 +114,6 @@ function _getById(client, id, res, cb) {
 		}
 		cb(err, instance);
 	});
-}
-
-function __urlParser(card, path, type, cb) {
-	//the path may be dangerous here, sanitize!
-	var user = card.username;
-	path = '/'+user+'/'+type+'/'+path;
-
-	var pathComponents = path.split('/');
-	for (var i = 0; i < pathComponents.length; i++) {
-		if (pathComponents[i] === '..') {
-			logger.error('Invalid characters in path: '+path);
-			cb('KO');
-			return;
-		}
-	}
-	return path;
 }
 
 module.exports = Provider;
