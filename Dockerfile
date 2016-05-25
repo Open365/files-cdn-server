@@ -10,7 +10,7 @@ CMD sh -c 'eyeos-run-server --serf /var/service/src/eyeos-files-cdn-server.js'
 
 COPY . ${InstallationDir}
 
-RUN apk update && apk add --no-cache curl make gcc g++ git python dnsmasq bash krb5-dev && \
+RUN apk update && apk add --no-cache curl make gcc g++ git python krb5-dev && \
     npm install --verbose --production && \
     npm cache clean && \
     apk del openssl ca-certificates libssh2 curl binutils-libs binutils gmp isl \
