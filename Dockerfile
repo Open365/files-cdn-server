@@ -12,10 +12,8 @@ COPY . ${InstallationDir}
 
 # krb5-dev is for mongoose
 RUN apk update && \
-    /scripts-base/installExtraBuild.sh && \
-    apk add --no-cache krb5-dev && \
+    /scripts-base/installExtraBuild.sh krb5-dev && \
     npm install --verbose --production && \
     npm cache clean && \
-    /scripts-base/deleteExtraBuild.sh && \
-    apk del krb5-dev && \
+    /scripts-base/deleteExtraBuild.sh krb5-dev && \
     rm -fr /etc/ssl /var/cache/apk/* /tmp/*
