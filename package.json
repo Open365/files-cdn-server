@@ -11,7 +11,7 @@
     "eyeos-auth": "*",
     "eyeos-service-ready-notify": "*",
     "uuid": "2.0.1",
-    "mongoose": "4.0.2",
+    "mongoose": "4.4.19",
     "log2out": "*",
     "eyeos-schemes": "*",
     "bytes": "2.0.1",

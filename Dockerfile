@@ -1,15 +1,21 @@
-FROM docker-registry.eyeosbcn.com/eyeos-fedora21-node-base
+FROM docker-registry.eyeosbcn.com/alpine6-node-base
+
+ENV WHATAMI cdn
 
 ENV InstallationDir /var/service/
-ENV WHATAMI cdn
 
 WORKDIR ${InstallationDir}
 
 CMD sh -c 'eyeos-run-server --serf /var/service/src/eyeos-files-cdn-server.js'
 
-RUN mkdir -p ${InstallationDir}/src/ && touch ${InstallationDir}/src/files-cdn-server-installed.js
-
 COPY . ${InstallationDir}
 
-RUN npm install --verbose && \
-    npm cache clean
+# krb5-dev is for mongoose
+RUN apk update && \
+    /scripts-base/installExtraBuild.sh && \
+    apk add --no-cache krb5-dev && \
+    npm install --verbose --production && \
+    npm cache clean && \
+    /scripts-base/deleteExtraBuild.sh && \
+    apk del krb5-dev && \
+    rm -fr /etc/ssl /var/cache/apk/* /tmp/*
