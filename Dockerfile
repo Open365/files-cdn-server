@@ -8,12 +8,13 @@ WORKDIR ${InstallationDir}
 
 CMD sh -c 'eyeos-run-server --serf /var/service/src/eyeos-files-cdn-server.js'
 
+COPY alpine-*.list /var/service/
 COPY . ${InstallationDir}
 
 # krb5-dev is for mongoose
 RUN apk update && \
-    /scripts-base/installExtraBuild.sh krb5-dev && \
+    /scripts-base/buildDependencies.sh --production --install && \
     npm install --verbose --production && \
     npm cache clean && \
-    /scripts-base/deleteExtraBuild.sh krb5-dev && \
+    /scripts-base/buildDependencies.sh --production --purgue && \
     rm -fr /etc/ssl /var/cache/apk/* /tmp/*
