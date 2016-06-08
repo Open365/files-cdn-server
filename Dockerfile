@@ -8,7 +8,6 @@ WORKDIR ${InstallationDir}
 
 CMD sh -c 'eyeos-run-server --serf /var/service/src/eyeos-files-cdn-server.js'
 
-COPY alpine-*.list /var/service/
 COPY . ${InstallationDir}
 
 # krb5-dev is for mongoose
