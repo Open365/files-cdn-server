@@ -11,8 +11,7 @@ CMD sh -c 'eyeos-run-server --serf /var/service/src/eyeos-files-cdn-server.js'
 COPY . ${InstallationDir}
 
 # krb5-dev is for mongoose
-RUN apk update && \
-    /scripts-base/buildDependencies.sh --production --install && \
+RUN /scripts-base/buildDependencies.sh --production --install && \
     npm install --verbose --production && \
     npm cache clean && \
     /scripts-base/buildDependencies.sh --production --purgue && \
